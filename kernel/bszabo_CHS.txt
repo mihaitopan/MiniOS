@@ -1,0 +1,10 @@
+Cylinder N on head 0 has 18 sectors, 18 * 512 = 0x2400.
+The same cylinder N on head 1 has 18 sectors.
+
+Cyl|Head|Sect|File Address
+c0 | h0 | s1 | 0x0000
+c0 | h1 | s1 | 0x2400
+c1 | h0 | s1 | 0x4800
+c1 | h1 | s1 | 0x6c00
+c2 | h0 | s1 | 0x9000
+c2 | h1 | s1 | 0xB400

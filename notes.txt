@@ -1,0 +1,85 @@
+
+--- QUESTIONS ---
+* MZ vs MZE
+* image with pagination !!!
+
+
+
+
+
+--- --- ---
+
+
+--- GENERAL OBSERVATIONS ---
+
+* B800h -> memoria video (direct pe ecran)
+* pe langa caracterul ce il scriem pe ecran un BYTE este culoarea (se imparte in 2 - foreground si background)
+* search for redirect window, things through sort of a pipe of Bochs
+
+--- --- ---
+
+
+
+--- TIMELINE ---
+
+MBR    -  1sector
+SSL    -  9sectors
+Kernel - 50sectors
+
+C H S       C(cilindru), H(?), S(?)
+0 0 1
+
+"stiva creste scazand"
+0 <- 7C00h(MBR)  -> 55AA semnatura de la final ca sa fie considerat sector de boot
+sare la 7E00h(SSL) -> citeste 9 sectoare
+sare la 9200h(kernel) -> citeste 50 sectoare
+-> asta e libera (daca scriu aiurea pot suprascrie sau alte chestii imi pot suprascrie memoria)
+se muta sectoarele la 200000h -> acolo va fi kernelul (ca sa existe suficient spatiu sa ne extindem) (dupa 10000h? nu mai trebuie sa ne facem griji ca va mai fi ceva in memorie - ?)
+
+__init.asm trebuie schimbat la 64bit -> trebuie sa activez paginarea - setez biti in registru (in assembly)
+
+* keyboard: tratarea de keyboard interrupts si doar apoi porniti intreruperea si tratati rutina
+            in Bochs - se genereaza o intrerupere cand tastez ceva
+			(una dintre primele instructiuni e cli) - dau sci doar dupa ce le generez
+			
+* bsod: -> tre sa intru intr-o rutina generica care afiseaza registrii si se opreste - BSODul nostru
+		(dumpez registrii, segmentele si ma opresc)
+		-> identity map la memoria virtuala? -> in rest nu trebuie sa tratez pagefault-ul
+		** extra: trateaza pagefault
+
+--- --- ---
+
+
+
+--- MY OWN (OR STOLEN :>) ---
+
+* AsmHighlighter - visualstudio
+* pune breakpointuri inainte de cli hlt !! sa vezi cand ajungi in hang, in ce hang si de ce
+* hang si triple fault le alternez ca sa gasesc problema in mod print penis (cure cancer with SIDA)
+
+* 87 in loc de 3 la paging flags
+--- --- ---
+
+
+
+--- RADUP ---
+
+https://wiki.osdev.org/Expanded_Main_Page
+https://wiki.osdev.org/Serial_ports
+http://www.brokenthorn.com/Resources/OSDev7.html
+
+MZPE parser
+
+multiboot (32bit)  ?? bochs or multiboot? PXE
+-> serial logging
+-> 
+
+
+IDT GDT [LDT]
+long jmp 64
+
+--- --- ---
+
+
+
+https://www.felixcloutier.com/documents/gcc-asm.html
